@@ -43,10 +43,10 @@ export default function InstagramDashboard() {
 
   const subtitle = lastUpdated
     ? `Live from Instagram · last updated ${lastUpdated.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-      })}`
-    : "Performance across @carcinofoundation, last 30 days.";
+      hour: "numeric",
+      minute: "2-digit",
+    })}`
+    : "Performance across @thecarcinofoundation, last 30 days.";
 
   return (
     <>
