@@ -3,13 +3,14 @@ import { LucideIcon, ArrowUpRight, ArrowDownRight } from "lucide-react";
 type KpiCardProps = {
   label: string;
   value: string;
-  delta: string;
-  trend: "up" | "down";
+  delta?: string;
+  trend?: "up" | "down" | "neutral";
   icon: LucideIcon;
 };
 
-export default function KpiCard({ label, value, delta, trend, icon: Icon }: KpiCardProps) {
+export default function KpiCard({ label, value, delta, trend = "neutral", icon: Icon }: KpiCardProps) {
   const isUp = trend === "up";
+  const isDown = trend === "down";
 
   return (
     <div className="frosted-card p-8 flex flex-col gap-5">
@@ -25,19 +26,27 @@ export default function KpiCard({ label, value, delta, trend, icon: Icon }: KpiC
       </span>
 
       <div className="flex items-center gap-1.5">
-        <span
-          className={`flex items-center gap-0.5 text-[14px] font-medium ${
-            isUp ? "text-ink-black" : "text-ash"
-          }`}
-        >
-          {isUp ? (
-            <ArrowUpRight size={14} strokeWidth={2} />
-          ) : (
-            <ArrowDownRight size={14} strokeWidth={2} />
-          )}
-          {delta}
-        </span>
-        <span className="text-[14px] text-slate">vs last month</span>
+        {delta !== undefined ? (
+          <>
+            <span
+              className={`flex items-center gap-0.5 text-[14px] font-medium ${
+                isUp ? "text-ink-black" : isDown ? "text-ash" : "text-slate"
+              }`}
+            >
+              {isUp ? (
+                <ArrowUpRight size={14} strokeWidth={2} />
+              ) : isDown ? (
+                <ArrowDownRight size={14} strokeWidth={2} />
+              ) : (
+                <span className="text-[14px]">—</span>
+              )}
+              {delta}
+            </span>
+            <span className="text-[14px] text-slate">vs last month</span>
+          </>
+        ) : (
+          <span className="text-[14px] text-slate">vs last month</span>
+        )}
       </div>
     </div>
   );
